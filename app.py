@@ -65,6 +65,16 @@ ml_pipe.fit(data_file, y)
 
 # print("Score:", ml_pipe.score(data_file, y))
 
-from sklearn.model_selection import KFold, cross_val_score
-kf = KFold(n_splits=5, shuffle=True, random_state=1337)
-print("Score:", cross_val_score(ml_pipe, data_file, y, cv=kf).mean())
+# from sklearn.model_selection import KFold, cross_val_score
+# kf = KFold(n_splits=5, shuffle=True, random_state=1337)
+# print("Score:", cross_val_score(ml_pipe, data_file, y, cv=kf).mean())
+
+to_predict = pd.DataFrame([{
+    "Platform": "Wii",
+    "Year": 2018,
+    "Genre": "Sports",
+    "Publisher": "Nintendo",
+    "NA_Sales": 100
+}])
+prediction = ml_pipe.predict(to_predict)
+print("Prediction:", prediction)
