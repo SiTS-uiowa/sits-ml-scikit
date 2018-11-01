@@ -41,7 +41,20 @@ year_train = data_file[year_cols]
 year_train_transformed = year_pipe.fit_transform(year_train)
 # print("Num per bin:", year_train_transformed.sum(axis=0))
 
+num_si_step = ('si', SimpleImputer(strategy='median'))
+num_ss_step = ('ss', StandardScaler())
+num_steps = [num_si_step, num_ss_step]
+
+num_pipe = Pipeline(num_steps)
+num_cols = ['NA_Sales']
+num_train = data_file[num_cols]
+# print(num_train.head(3))
+
+num_train_transformed = num_pipe.fit_transform(num_train)
+# print("Shape:", num_train_transformed.shape)
+
 transformers = [('string', pipe, string_cols),
+                ('num', num_pipe, num_cols),
                 ('year', year_pipe, year_cols)]
 ct = ColumnTransformer(transformers=transformers)
 X = ct.fit_transform(data_file)
